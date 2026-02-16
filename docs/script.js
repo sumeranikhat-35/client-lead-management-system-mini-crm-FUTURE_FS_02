@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("http://localhost:5000/add-lead", {
+    const res = await fetch("https://client-lead-management-system-mini-crm-4d0q.onrender.com/add-lead", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -27,4 +27,5 @@ form.addEventListener("submit", async (e) => {
   } catch (error) {
     responseText.innerText = "Error submitting form";
   }
+
 });
