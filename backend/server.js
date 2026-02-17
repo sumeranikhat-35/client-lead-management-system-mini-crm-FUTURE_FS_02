@@ -8,15 +8,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true }));
 
 // MySQL connection
-const db = mysql.createConnection({
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  ssl: {
-    rejectUnauthorized: false
-  }      
+  port: process.env.DB_PORT
 });
 
 db.connect((err) => {
@@ -108,4 +107,5 @@ app.post("/login", (req, res) => {
   } else {
     res.status(401).send("Invalid credentials");
   }
+
 });
