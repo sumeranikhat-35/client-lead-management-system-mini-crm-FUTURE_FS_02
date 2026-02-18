@@ -1,4 +1,4 @@
-fetch("https://client-lead-management-system-mini-crm-4d0q.onrender.com/leads")
+fetch("https://client-lead-management-system-mini-crm-tseq.onrender.com/leads")
   .then(res => res.json())
   .then(data => {
     const table = document.getElementById("leadTable");
@@ -25,7 +25,7 @@ fetch("https://client-lead-management-system-mini-crm-4d0q.onrender.com/leads")
   });
 
 function updateStatus(id, status) {
-  fetch(`https://client-lead-management-system-mini-crm-4d0q.onrender.com/update-status/${id}`, {
+  fetch(`https://client-lead-management-system-mini-crm-tseq.onrender.com/update-status/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status })
@@ -34,10 +34,11 @@ function updateStatus(id, status) {
 
 function addNotes(id) {
   const note = document.getElementById(`note-${id}`).value;
-  fetch(`https://client-lead-management-system-mini-crm-4d0q.onrender.com/add-notes/${id}`, {
+  fetch(`https://client-lead-management-system-mini-crm-tseq.onrender.com/add-notes/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ notes: note })
   });
 
   }
+
