@@ -25,10 +25,11 @@ form.addEventListener("submit", async (e) => {
     form.reset();
 
   } catch (error) {
-    responseText.innerText = "Error submitting form";
+    responseText.innerText = "Submitting form";
   }
 
 });
+
 
 
 
