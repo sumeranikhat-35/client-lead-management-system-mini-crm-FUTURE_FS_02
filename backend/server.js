@@ -31,6 +31,21 @@ app.get("/", (req, res) => {
   res.send("Mini CRM backend running 🚀");
 });
 
+app.get("/fix-table", (req, res) => {
+  const sql = `
+    ALTER TABLE leads 
+    MODIFY id INT PRIMARY KEY AUTO_INCREMENT;
+  `;
+
+  db.query(sql, (err) => {
+    if (err) {
+      console.log("FIX ERROR:", err);
+      return res.status(500).send(err.message);
+    }
+    res.send("Table fixed successfully ✅");
+  });
+});
+
 // Add lead
 app.post("/add-lead", (req, res) => {
   const { name, email, phone, message } = req.body;
@@ -103,6 +118,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
 
