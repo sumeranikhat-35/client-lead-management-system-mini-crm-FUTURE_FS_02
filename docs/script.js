@@ -19,17 +19,16 @@ form.addEventListener("submit", async (e) => {
       },
       body: JSON.stringify(data)
     });
+    if(!res.ok){
+      throw new Error("Server error");
+    }
 
     const result = await res.json();
-    responseText.innerText = result.message;
+    responseText.innerText = result.message || "Lead added successfully";
     form.reset();
 
   } catch (error) {
-    responseText.innerText = "Submitting form";
+    console.error(error);
+    responseText.innerText = "Error submitting form";
   }
-
 });
-
-
-
-
