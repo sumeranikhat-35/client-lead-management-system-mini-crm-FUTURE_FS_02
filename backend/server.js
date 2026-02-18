@@ -41,7 +41,7 @@ app.post("/add-lead", (req, res) => {
   db.query(sql, [name, email, phone, message, "New"], (err) => {
     if (err) {
       console.log("INSERT ERROR:", err);
-      return res.status(500).send(err.message);
+      return res.status(500).json({error : err.message});
     }
     res.json({ message: "Lead added successfully ✅" });
   });
@@ -103,6 +103,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
 
