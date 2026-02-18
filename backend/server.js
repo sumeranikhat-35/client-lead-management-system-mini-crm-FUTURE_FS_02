@@ -8,9 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true }));
 
 // MySQL connection
-const mysql = require('mysql2');
-
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -109,3 +107,4 @@ app.post("/login", (req, res) => {
   }
 
 });
+
