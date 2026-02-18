@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("https://client-lead-management-system-mini-crm-4d0q.onrender.com/add-lead", {
+    const res = await fetch("https://client-lead-management-system-mini-crm-tseq.onrender.com/add-lead", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -29,3 +29,4 @@ form.addEventListener("submit", async (e) => {
   }
 
 });
+
