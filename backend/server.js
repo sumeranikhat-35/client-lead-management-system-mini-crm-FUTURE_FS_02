@@ -6,15 +6,11 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors({
-  origin: "https://sumeranikhat-35.github.io",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
+  origin: "*"
 }));
 
 
 app.use(express.json());
-app.option("/add-lead", cors());
-app.option("/update-status/:id", cors());
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -136,6 +132,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
 
