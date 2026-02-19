@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 
 app.get('/fix_table', async (req, res) => {
   try {
-    await db.promise().query(DROP TABLE IF EXISTS leads);
+    await db.promise().query(`DROP TABLE IF EXISTS leads`);
 
     await db.promise().query(`
       CREATE TABLE leads (
@@ -53,6 +53,8 @@ app.get('/fix_table', async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+
 // Add lead
 app.post("/add-lead", (req, res) => {
   const { name, email, phone, message } = req.body;
@@ -125,6 +127,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
-
