@@ -1,13 +1,11 @@
-require("dotenv").config();
+require('dotenv').config();
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
-
 const app = express();
-
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true }));
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -15,7 +13,7 @@ const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: Number(process.env.DB_PORT),
+  port: process.env.DB_PORT
 });
 
 db.connect((err) => {
@@ -31,47 +29,38 @@ app.get("/", (req, res) => {
   res.send("Mini CRM backend running 🚀");
 });
 
-app.get("/fix-table", (req, res) => {
-  const sql = `
-    ALTER TABLE leads 
-    MODIFY id INT PRIMARY KEY AUTO_INCREMENT;
-  `;
-
-  db.query(sql, (err) => {
-    if (err) {
-      console.log("FIX ERROR:", err);
-      return res.status(500).send(err.message);
-    }
-    res.send("Table fixed successfully ✅");
-  });
-});
-
 // Add lead
 app.post("/add-lead", (req, res) => {
   const { name, email, phone, message } = req.body;
 
   const sql =
-    "INSERT INTO leads (name, email, phone, message, status) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO leads (name, email, phone, message) VALUES (?, ?, ?, ?)";
 
-  db.query(sql, [name, email, phone, message, "New"], (err) => {
+  db.query(sql, [name, email, phone, message], (err) => {
     if (err) {
-      console.log("INSERT ERROR:", err);
-      return res.status(500).json({error : err.message});
+      res.status(500).send(err);
+    } else {
+      res.send({ message: "Lead added successfully ✅" });
     }
-    res.json({ message: "Lead added successfully ✅" });
   });
 });
 
-// Get all leads (SHOW REAL ERROR NOW)
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(Server running on port ${PORT});
+});
+
 app.get("/leads", (req, res) => {
   const sql = "SELECT * FROM leads";
 
   db.query(sql, (err, result) => {
     if (err) {
-      console.log("DB ERROR:", err);
-      return res.status(500).send(err.message);
+      console.log(err);
+      res.status(500).send("Error fetching leads");
+    } else {
+      res.json(result);
     }
-    res.json(result);
   });
 });
 
@@ -81,11 +70,13 @@ app.put("/update-status/:id", (req, res) => {
 
   const sql = "UPDATE leads SET status = ? WHERE id = ?";
 
-  db.query(sql, [status, leadId], (err) => {
+  db.query(sql, [status, leadId], (err, result) => {
     if (err) {
-      return res.status(500).send(err.message);
+      console.log(err);
+      res.status(500).send("Error updating status");
+    } else {
+      res.send("Status updated");
     }
-    res.send("Status updated");
   });
 });
 
@@ -95,13 +86,16 @@ app.put("/add-notes/:id", (req, res) => {
 
   const sql = "UPDATE leads SET notes = ? WHERE id = ?";
 
-  db.query(sql, [notes, leadId], (err) => {
+  db.query(sql, [notes, leadId], (err, result) => {
     if (err) {
-      return res.status(500).send(err.message);
+      console.log(err);
+      res.status(500).send("Error adding notes");
+    } else {
+      res.send("Notes added");
     }
-    res.send("Notes added");
   });
 });
+
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -111,15 +105,5 @@ app.post("/login", (req, res) => {
   } else {
     res.status(401).send("Invalid credentials");
   }
+
 });
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-
-
-
-
