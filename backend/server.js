@@ -36,7 +36,7 @@ app.get("/fix-table", (req, res) => {
     ALTER TABLE leads 
     MODIFY id INT PRIMARY KEY AUTO_INCREMENT;
   `;
-
+  
   db.query(sql, (err) => {
     if (err) {
       console.log("FIX ERROR:", err);
@@ -118,3 +118,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
