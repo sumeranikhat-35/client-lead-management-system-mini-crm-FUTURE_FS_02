@@ -51,9 +51,9 @@ app.post("/add-lead", (req, res) => {
   const { name, email, phone, message } = req.body;
 
   const sql =
-    "INSERT INTO leads (name, email, phone, message, status) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO leads (name, email, phone, message) VALUES (?, ?, ?, ?)";
 
-  db.query(sql, [name, email, phone, message, "New"], (err) => {
+  db.query(sql, [name, email, phone, message,], (err) => {
     if (err) {
       console.log("INSERT ERROR:", err);
       return res.status(500).json({error : err.message});
@@ -118,3 +118,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(Server running on port ${PORT});
 });
+
