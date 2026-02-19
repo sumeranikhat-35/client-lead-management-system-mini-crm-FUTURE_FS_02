@@ -17,7 +17,11 @@ form.addEventListener("submit", async (e) => {
     headers: {
     "Content-Type": "application/json"
   },
-  body: JSON.stringify(data)
+  body: JSON.stringify({
+    name,
+    email,
+    phone
+  })
 });
 let result;
 try {
@@ -38,5 +42,6 @@ form.reset();
     responseText.innerText = "Error submitting form";
   }
 });
+
 
 
