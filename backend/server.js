@@ -5,7 +5,12 @@ const mysql = require("mysql2");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({origin: "https://sumeranikhat-35.github.io",
+  methods: ["GET", "POST", "PUT"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -127,4 +132,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
