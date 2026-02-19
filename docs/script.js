@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("https://client-lead-management-system-mini.onrender.com/add-lead", {
+    const res = await fetch("https://client-lead-management-system-mini-crm-tseq.onrender.com/add-lead", {
     method: "POST",
     headers: {
     "Content-Type": "application/json"
@@ -38,4 +38,5 @@ form.reset();
     responseText.innerText = "Error submitting form";
   }
 });
+
 
