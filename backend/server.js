@@ -31,21 +31,29 @@ app.get("/", (req, res) => {
   res.send("Mini CRM backend running 🚀");
 });
 
-app.get("/fix-table", (req, res) => {
-  const sql = `
-    ALTER TABLE leads 
-    MODIFY id INT PRIMARY KEY AUTO_INCREMENT;
-  `;
-  
-  db.query(sql, (err) => {
-    if (err) {
-      console.log("FIX ERROR:", err);
-      return res.status(500).send(err.message);
-    }
-    res.send("Table fixed successfully ✅");
-  });
-});
+app.get('/fix_table', async (req, res) => {
+  try {
+    await db.query(`
+      DROP TABLE IF EXISTS leads;
+    `);
 
+    await db.query(`
+      CREATE TABLE leads (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        status VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    res.send("Table fixed successfully!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fixing table");
+  }
+});
 // Add lead
 app.post("/add-lead", (req, res) => {
   const { name, email, phone, message } = req.body;
@@ -118,4 +126,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
