@@ -12,23 +12,30 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("https://client-lead-management-system-mini-crm-tseq.onrender.com/add-lead", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-    if(!res.ok){
-      throw new Error("Server error");
-    }
+    const res = await fetch("https://client-lead-management-system-mini.onrender.com/add-lead", {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+});
+let result;
+try {
+  result = await res.json();
+} catch {
+  throw new Error("Invalid JSON response");
+}
 
-    const result = await res.json();
-    responseText.innerText = result.message || "Lead added successfully";
-    form.reset();
+if (!res.ok) {
+  throw new Error(result.message || "Server error");
+}
+
+responseText.innerText = result.message;
+form.reset();
 
   } catch (error) {
     console.error(error);
     responseText.innerText = "Error submitting form";
   }
 });
+
